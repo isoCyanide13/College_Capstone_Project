@@ -1,5 +1,5 @@
 "use client";
-
+import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -26,7 +26,7 @@ export default function Navbar() {
   const profileRef = useRef<HTMLDivElement>(null);
 
   /* Simulated auth state — replace with real auth hook later */
-  const isAuthenticated = false;
+  const { isAuthenticated, logout, user } = useAuth();
 
   const navLinks = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -131,10 +131,10 @@ export default function Navbar() {
                   <div className="absolute right-0 mt-2 w-56 bg-surface-raised border border-border rounded-sm shadow-sm py-1 z-50">
                     <div className="px-4 py-3 hairline">
                       <p className="font-headline text-sm font-semibold text-ink">
-                        Alex Johnson
+                        {user?.name || "User"}
                       </p>
                       <p className="font-body text-xs text-ink-faint mt-0.5">
-                        alex@example.com
+                        {user?.role || "student"}
                       </p>
                     </div>
                     <Link
@@ -153,6 +153,7 @@ export default function Navbar() {
                     </Link>
                     <div className="hairline my-1" />
                     <button
+                      onClick={logout}
                       className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-headline text-danger hover:bg-surface-alt snap-transition w-full text-left"
                     >
                       <LogOut className="w-4 h-4" />
@@ -236,7 +237,10 @@ export default function Navbar() {
                   <User className="w-4 h-4" />
                   Profile & Settings
                 </Link>
-                <button className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-headline font-medium text-danger hover:bg-surface-alt snap-transition w-full text-left">
+                <button
+                onClick={logout}
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-headline text-danger hover:bg-surface-alt snap-transition w-full text-left"
+                >
                   <LogOut className="w-4 h-4" />
                   Sign Out
                 </button>
