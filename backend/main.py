@@ -32,8 +32,13 @@ app.add_middleware(
 
 # ─── Routers ─────────────────────────────────────────────────────────
 # TODO: Register routers as they are implemented
-# from backend.routers import auth, users, sessions, questions, answers, evaluations, dashboard
-# app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+# Routers
+from backend.routers import auth
+app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+from backend.routers import sessions
+app.include_router(sessions.router, prefix="/api/sessions", tags=["Sessions"])
+from backend.routers import dashboard as dashboard_router
+app.include_router(sessions.router, prefix="/api/dashboard", tags=["Dashboard"])
 # app.include_router(users.router, prefix="/api/users", tags=["Users"])
 # app.include_router(sessions.router, prefix="/api/sessions", tags=["Sessions"])
 # app.include_router(questions.router, prefix="/api/questions", tags=["Questions"])

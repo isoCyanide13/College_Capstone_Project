@@ -24,6 +24,8 @@ from backend.models.evaluation import Evaluation
 from backend.models.skill_vector import SkillVector
 from backend.models.cheat_event import CheatEvent
 from backend.models.conversation_log import ConversationLog
+from backend.models.subtopic_scores import SubtopicScore
+from backend.models.feedback import SessionFeedback
 
 __all__ = [
     "User",
@@ -35,4 +37,6 @@ __all__ = [
     "SkillVector",
     "CheatEvent",
     "ConversationLog",
+    "SubtopicScore",
+    "SessionFeedback",
 ]

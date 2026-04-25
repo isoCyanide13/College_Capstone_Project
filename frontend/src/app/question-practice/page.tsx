@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import TopicSelector from "@/components/TopicSelector";
+import { useRouter } from "next/navigation";
+import { getToken } from "@/lib/auth";
 
 /* ─── Practice Mode Tabs ─── */
 const practiceTabs = [
@@ -74,11 +76,63 @@ const classicTests = [
 ];
 
 export default function QuestionPracticePage() {
-  const [activeTab, setActiveTab] = useState("topic");
+const [activeTab, setActiveTab] = useState("topic");
+const [starting, setStarting] = useState(false);
+const router = useRouter();
+
+const handleTopicStart = async (config: any) => {
+  setStarting(true);
+  const token = getToken();
+  try {
+    const res = await fetch("http://127.0.0.1:8000/api/sessions/start", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        domain_id: config.domainId,
+        subject_id: config.subjectId,
+        subject_name: config.subjectName,
+        skill_field: config.skillField,
+        subtopics: config.subtopics,
+        difficulty: config.difficulty,
+        question_type: config.questionType,
+        question_count: config.questionCount,
+      }),
+    });
+    if (!res.ok) throw new Error("Failed to start session");
+    const session = await res.json();
+    sessionStorage.setItem("currentSession", JSON.stringify({
+      ...session,
+      timeLimit: config.timeLimit || 30,
+    }));
+    router.push(`/quiz/${session.session_id}`);
+  } catch (e) {
+    alert("Failed to start session. Make sure the backend is running.");
+    setStarting(false);
+  }
+};
 
   return (
-    <div className="flex-1 flex flex-col p-4 sm:p-8 max-w-7xl mx-auto w-full">
-      {/* Header */}
+  <div className="flex-1 flex flex-col p-4 sm:p-8 max-w-7xl mx-auto w-full">
+
+    {/* ─── AI Generation Loading Overlay ─── */}
+    {starting && (
+      <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
+        <div className="bg-surface-raised border border-border rounded-sm p-8 max-w-sm w-full text-center">
+          <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <h3 className="font-headline text-base font-semibold text-ink mb-2">
+            Generating Your Questions
+          </h3>
+          <p className="font-body text-sm text-ink-muted">
+            AI is crafting personalized questions based on your selection. This takes 5-10 seconds...
+          </p>
+        </div>
+      </div>
+    )}
+
+    {/* Header */}
       <div className="mb-8 pb-6 hairline">
         <h1 className="font-headline text-2xl font-bold text-ink mb-1">
           Question Practice
@@ -126,7 +180,7 @@ export default function QuestionPracticePage() {
                 automatically mapped for a focused practice session.
               </p>
             </div>
-            <TopicSelector />
+            <TopicSelector onStart={handleTopicStart} />
           </div>
         )}
 

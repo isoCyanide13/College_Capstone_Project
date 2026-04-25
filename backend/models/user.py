@@ -33,3 +33,4 @@ class User(Base):
     sessions = relationship("Session", back_populates="user")
     answers = relationship("Answer", back_populates="user")
     skill_vector = relationship("SkillVector", back_populates="user", uselist=False)
+    subtopic_scores = relationship("SubtopicScore", back_populates="user")

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Public_Sans, Merriweather, Special_Elite } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/context/AuthContext";
 
 const publicSans = Public_Sans({
   variable: "--font-headline",
@@ -41,8 +42,10 @@ export default function RootLayout({
       className={`${publicSans.variable} ${merriweather.variable} ${specialElite.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col pt-16 bg-surface text-ink">
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
