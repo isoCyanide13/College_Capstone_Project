@@ -1,0 +1,7 @@
+docker exec -it interview_db psql -U postgres -d interview_db
+SELECT id, name, email, role, created_at FROM users;
+docker-compose up -d
+uvicorn backend.main:app --reload
+
+type "frontend\src\app\dashboard\page.tsx"
+type backend\routers\sessions.py
