@@ -118,14 +118,14 @@ See [docs/architecture.md](docs/architecture.md) for detailed architecture docum
 
 ## 📊 Implementation Phases
 
-| Phase | Weeks | Focus |
-|-------|-------|-------|
-| 1 — Foundation | 1–4 | Auth, dashboard, question generation, evaluation |
-| 2 — Coding System | 5–8 | Monaco editor, Judge0, AI code review |
-| 3 — Voice Engine | 9–12 | STT, TTS, AI orchestrator, WebSocket |
-| 4 — Anti-Cheat | 13–16 | Gaze tracking, screen monitoring, emotion detection |
-| 5 — Adaptive Engine | 17–20 | Skill vectors, adaptive difficulty, analytics |
-| 6 — Polish + Launch | 21–24 | Replay, testing, optimization, demo |
+| Phase                | Weeks  | Focus                                               |
+| -------------------- | ------ | --------------------------------------------------- |
+| 1 — Foundation      | 1–4   | Auth, dashboard, question generation, evaluation    |
+| 2 — Coding System   | 5–8   | Monaco editor, Judge0, AI code review               |
+| 3 — Voice Engine    | 9–12  | STT, TTS, AI orchestrator, WebSocket                |
+| 4 — Anti-Cheat      | 13–16 | Gaze tracking, screen monitoring, emotion detection |
+| 5 — Adaptive Engine | 17–20 | Skill vectors, adaptive difficulty, analytics       |
+| 6 — Polish + Launch | 21–24 | Replay, testing, optimization, demo                 |
 
 See [IMPLEMENTATION_HISTORY.md](IMPLEMENTATION_HISTORY.md) for detailed module progress.
 
@@ -133,12 +133,12 @@ See [IMPLEMENTATION_HISTORY.md](IMPLEMENTATION_HISTORY.md) for detailed module p
 
 ## 🔑 API Keys Required
 
-| Service | Purpose | Get Key |
-|---------|---------|---------|
-| Gemini API | Question generation, evaluation, screen analysis | [Google AI Studio](https://aistudio.google.com/) |
-| Judge0 | Code execution | [RapidAPI](https://rapidapi.com/judge0-official/api/judge0-ce) |
-| ElevenLabs | Text-to-Speech (optional) | [ElevenLabs](https://elevenlabs.io/) |
-| Deepgram | Speech-to-Text (optional) | [Deepgram](https://deepgram.com/) |
+| Service    | Purpose                                          | Get Key                                                       |
+| ---------- | ------------------------------------------------ | ------------------------------------------------------------- |
+| Gemini API | Question generation, evaluation, screen analysis | [Google AI Studio](https://aistudio.google.com/)               |
+| Judge0     | Code execution                                   | [RapidAPI](https://rapidapi.com/judge0-official/api/judge0-ce) |
+| ElevenLabs | Text-to-Speech (optional)                        | [ElevenLabs](https://elevenlabs.io/)                           |
+| Deepgram   | Speech-to-Text (optional)                        | [Deepgram](https://deepgram.com/)                              |
 
 ---
 

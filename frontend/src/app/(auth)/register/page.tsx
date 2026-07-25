@@ -30,7 +30,7 @@ export default function RegisterPage() {
         className="glass-card w-full max-w-md p-8 rounded-2xl relative z-10"
       >
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
+          <h2 className="text-3xl font-bold text-grey mb-2">Create Account</h2>
           <p className="text-zinc-400 text-sm">Join to start practicing real technical interviews</p>
         </div>
 
