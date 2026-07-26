@@ -29,7 +29,7 @@ export default function LoginPage() {
         className="glass-card w-full max-w-md p-8 rounded-2xl relative z-10"
       >
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-grey mb-2">Welcome Back</h2>
+          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
           <p className="text-zinc-400 text-sm">Sign in to continue your interview prep</p>
         </div>
 
