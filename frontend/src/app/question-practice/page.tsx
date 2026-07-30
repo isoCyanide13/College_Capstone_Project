@@ -84,7 +84,7 @@ const handleTopicStart = async (config: any) => {
   setStarting(true);
   const token = getToken();
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/sessions/start", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/start`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

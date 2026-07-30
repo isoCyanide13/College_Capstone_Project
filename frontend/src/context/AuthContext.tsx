@@ -4,7 +4,8 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { useRouter } from "next/navigation";
 import { saveToken, saveUser, removeToken, getUser } from "@/lib/auth";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface User {
   id: string;

@@ -19,7 +19,8 @@ import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const SkillRadar = dynamic(() => import("@/components/SkillRadar"), {
   ssr: false,

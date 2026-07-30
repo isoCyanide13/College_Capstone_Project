@@ -17,7 +17,8 @@ import { getToken } from "@/lib/auth";
 import clsx from "clsx";
 import { Download } from "lucide-react";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface Session {
   session_id: string;
