@@ -13,10 +13,9 @@ sqlalchemy==2.0.35
 asyncpg==0.30.0
 alembic==1.13.3
 psycopg2-binary==2.9.9
-greenlet==3.1.1
 
 # ========================
-# Validation & Auth
+# Validation & Authentication
 # ========================
 pydantic>=2.10,<3.0.0
 pydantic-settings==2.5.2
@@ -29,6 +28,7 @@ bcrypt==4.2.0
 # AI / LLM
 # ========================
 google-generativeai==0.8.3
+groq==0.9.0
 
 # ========================
 # HTTP Client
@@ -53,18 +53,17 @@ pytest==8.3.3
 pytest-asyncio==0.24.0
 
 # ========================
-# Speech-to-Text (Phase 3)
+# Speech-to-Text
 # ========================
 faster-whisper==1.0.3
 
 # ========================
-# Text-to-Speech (Phase 3)
+# Text-to-Speech
 # ========================
-# Using Kokoro for free local TTS (no API key needed)
 kokoro==0.9.4
 
 # ========================
-# Computer Vision & Anti-Cheat (Phase 4)
+# Computer Vision & Anti-Cheat
 # ========================
 opencv-python==4.10.0.84
 mediapipe==0.10.18
@@ -72,12 +71,12 @@ deepface==0.0.93
 numpy>=1.24.0
 
 # ========================
-# GitHub Scraping (Phase 4 - Interview Mode)
+# GitHub Scraping
 # ========================
 crawl4ai==0.4.248
 
 # ========================
-# Audio Analysis (Anti-Cheat)
+# Audio Analysis
 # ========================
 librosa==0.10.2
 sounddevice==0.5.1
