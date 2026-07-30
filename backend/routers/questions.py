@@ -11,8 +11,6 @@ Endpoints:
     PUT    /api/questions/{id}       — Update question
     DELETE /api/questions/{id}       — Delete question
 
-Implementation Phase: Phase 1 — Week 2
-Status: 🔲 Not Started
 """
 
 from fastapi import APIRouter

@@ -2,9 +2,6 @@
 Skill Vector Schemas
 =====================
 Pydantic models for skill vector data.
-
-Phase: 5 — Week 17
-Status: 🔲 Not Started
 """
 
 from pydantic import BaseModel

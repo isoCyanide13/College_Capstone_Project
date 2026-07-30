@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Mail, Lock, ArrowRight, AlertCircle } from "lucide-react";
+import { Mail, Lock, ArrowRight, AlertCircle, Mic } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -17,84 +17,123 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 relative">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-[100px] opacity-50" />
-      </div>
+    <div className="aero-bg flex-1 flex flex-col justify-center items-center py-12 px-4 min-h-screen">
+
+      {/* Ambient warm spots */}
+      <div className="aero-spot-1 top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2" />
+      <div className="aero-spot-2 bottom-1/4 right-1/3 translate-x-1/2 translate-y-1/2" />
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="glass-card w-full max-w-md p-8 rounded-2xl relative z-10"
+        initial={{ opacity: 0, y: 12, scale: 0.99 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="glass-warm w-full max-w-sm p-8 relative z-10"
       >
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-          <p className="text-zinc-400 text-sm">Sign in to continue your interview prep</p>
+        {/* Logo mark */}
+        <div className="flex items-center gap-2.5 mb-8">
+          <div className="w-7 h-7 rounded-sm bg-ink flex items-center justify-center">
+            <Mic className="w-3.5 h-3.5 text-surface" />
+          </div>
+          <span className="font-headline font-bold text-base tracking-tight text-ink">
+            Mock<span className="text-accent">AI</span>
+          </span>
         </div>
 
-        {/* Error Message */}
+        {/* Heading */}
+        <div className="mb-7">
+          <h2 className="font-headline text-xl font-bold text-ink mb-1">
+            Welcome back
+          </h2>
+          <p className="font-body text-sm text-ink-muted">
+            Sign in to continue your interview prep
+          </p>
+        </div>
+
+        {/* Error */}
         {error && (
-          <div className="mb-4 flex items-center gap-2 bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-lg text-sm">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            {error}
+          <div className="mb-5 flex items-start gap-2.5 bg-red-50 border border-red-200 text-danger px-3.5 py-3 rounded-md text-sm font-body">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+            <span>{error}</span>
           </div>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-5">
+
+          {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1.5">
-              Email Address
+            <label className="font-headline text-xs font-semibold text-ink-muted uppercase tracking-wider block mb-2">
+              Email
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-zinc-500" />
+                <Mail className="h-4 w-4 text-ink-faint" />
               </div>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-zinc-500 transition-colors"
+                className="aero-input pl-9 pr-4 py-2.5"
                 placeholder="you@example.com"
               />
             </div>
           </div>
 
+          {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1.5">
+            <label className="font-headline text-xs font-semibold text-ink-muted uppercase tracking-wider block mb-2">
               Password
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-zinc-500" />
+                <Lock className="h-4 w-4 text-ink-faint" />
               </div>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                className="w-full pl-10 pr-4 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-zinc-500 transition-colors"
+                className="aero-input pl-9 pr-4 py-2.5"
                 placeholder="••••••••"
               />
             </div>
           </div>
 
+          {/* Submit */}
           <button
             onClick={handleSubmit}
             disabled={isLoading}
-            className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white py-2.5 rounded-lg font-medium transition-colors"
+            className="aero-btn mt-1"
           >
-            {isLoading ? "Signing in..." : <>Sign In <ArrowRight className="w-4 h-4" /></>}
+            {isLoading
+              ? "Signing in..."
+              : <><span>Sign In</span><ArrowRight className="w-4 h-4" /></>
+            }
           </button>
         </div>
 
-        <div className="mt-6 text-center text-sm text-zinc-400">
-          Don't have an account?{" "}
-          <Link href="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-            Sign up for free
-          </Link>
+        {/* Footer */}
+        <div className="mt-6 pt-5 border-t border-[rgba(196,186,170,0.4)] text-center">
+          <p className="font-body text-sm text-ink-muted">
+            Don't have an account?{" "}
+            <Link
+              href="/register"
+              className="text-accent hover:text-accent-hover font-medium snap-transition"
+            >
+              Sign up for free
+            </Link>
+          </p>
         </div>
       </motion.div>
+
+      {/* Bottom tagline */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.4 }}
+        className="relative z-10 mt-6 font-body text-xs text-ink-faint"
+      >
+        AI-powered interview preparation
+      </motion.p>
     </div>
   );
 }

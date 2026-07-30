@@ -5,3 +5,6 @@ uvicorn backend.main:app --reload
 
 type "frontend\src\app\dashboard\page.tsx"
 type backend\routers\sessions.py
+
+$env:DATABASE_URL = "postgresql://postgres:Revolver-Nimbly4-Ethanol@db.uvtpjczbamwejxxzywuq.supabase.co:5432/postgres"
+alembic upgrade head

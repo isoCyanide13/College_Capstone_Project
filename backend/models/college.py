@@ -4,8 +4,6 @@ College Model
 Represents educational institutions.
 
 Table: colleges
-Phase: 1 — Week 1
-Status: 🔲 Not Started
 """
 
 import uuid

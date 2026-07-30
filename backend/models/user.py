@@ -4,8 +4,7 @@ User Model
 Represents students, admins, and placement officers.
 
 Table: users
-Phase: 1 — Week 1
-Status: 🔲 Not Started
+
 """
 
 import uuid

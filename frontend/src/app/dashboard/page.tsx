@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { motion, animate } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
 import { getToken } from "@/lib/auth";
@@ -20,6 +21,8 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 
 const API_BASE = "http://127.0.0.1:8000";
+
+const spring = { type: "spring" as const, stiffness: 380, damping: 26 };
 
 const SkillRadar = dynamic(() => import("@/components/SkillRadar"), {
   ssr: false,
@@ -69,6 +72,37 @@ function formatSubject(key: string): string {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
+/* Count-up number for the stat cards. Only mounts once loading is
+   false, so it plays once real data arrives instead of animating
+   from a placeholder. */
+function AnimatedStat({
+  value,
+  decimals = 0,
+  suffix = "",
+}: {
+  value: number;
+  decimals?: number;
+  suffix?: string;
+}) {
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    const controls = animate(0, value, {
+      duration: 0.8,
+      ease: [0.34, 1.56, 0.64, 1],
+      onUpdate: (v) => setDisplay(v),
+    });
+    return () => controls.stop();
+  }, [value]);
+
+  return (
+    <span className="font-precise">
+      {display.toFixed(decimals)}
+      {suffix}
+    </span>
+  );
+}
+
 export default function DashboardPage() {
   const { user } = useAuth();
   const router = useRouter();
@@ -102,27 +136,35 @@ export default function DashboardPage() {
   const statCards = [
     {
       label: "Overall Score",
-      value: stats ? `${stats.avg_score}/10` : "—",
+      raw: stats?.avg_score ?? 0,
+      decimals: 1,
+      suffix: "/10",
       icon: Trophy,
       accent: "text-warning",
     },
     {
       label: "Sessions Done",
-      value: stats ? `${stats.total_sessions}` : "—",
+      raw: stats?.total_sessions ?? 0,
+      decimals: 0,
+      suffix: "",
       icon: Target,
       accent: "text-success",
     },
     {
       label: "Subjects Practiced",
-      value: stats
-        ? `${Object.values(stats.skill_scores).filter(v => v > 0).length}`
-        : "—",
+      raw: stats
+        ? Object.values(stats.skill_scores).filter(v => v > 0).length
+        : 0,
+      decimals: 0,
+      suffix: "",
       icon: BookOpen,
       accent: "text-accent",
     },
     {
       label: "Practice Time",
-      value: stats ? `${stats.total_hours}h` : "—",
+      raw: stats?.total_hours ?? 0,
+      decimals: 0,
+      suffix: "h",
       icon: Clock,
       accent: "text-ink-muted",
     },
@@ -146,13 +188,19 @@ export default function DashboardPage() {
             }
           </p>
         </div>
-        <Link
-          href="/question-practice"
-          className="hidden sm:flex items-center gap-2 bg-ink text-surface-raised px-5 py-2.5 rounded-sm font-headline font-medium text-sm snap-transition hover:bg-accent-hover"
+        <motion.div
+          whileHover={{ y: -3 }}
+          whileTap={{ y: 0, scale: 0.96 }}
+          transition={spring}
         >
-          Start Practice
-          <ArrowRight className="w-4 h-4" />
-        </Link>
+          <Link
+            href="/question-practice"
+            className="hidden sm:flex items-center gap-2 bg-ink text-surface-raised px-5 py-2.5 notch font-headline font-medium text-sm snap-transition hover:bg-accent-hover"
+          >
+            Start Practice
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
       </div>
 
       {/* Stats Grid */}
@@ -160,24 +208,28 @@ export default function DashboardPage() {
         {statCards.map((stat, idx) => {
           const Icon = stat.icon;
           return (
-            <div
+            <motion.div
               key={idx}
-              className="bg-surface-raised p-5 flex items-center gap-4"
+              whileHover={{ y: -3 }}
+              transition={spring}
+              className="relative bg-surface-raised p-5 flex items-center gap-4 grid-texture overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-sm bg-surface-alt flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 notch-sm bg-surface-alt flex items-center justify-center flex-shrink-0 relative z-[1]">
                 <Icon className={`w-5 h-5 ${stat.accent}`} />
               </div>
-              <div>
+              <div className="relative z-[1]">
                 <p className="text-xs font-headline text-ink-muted uppercase tracking-wider mb-0.5">
                   {stat.label}
                 </p>
                 <p className="text-xl font-headline font-bold text-ink tracking-tight">
                   {loading ? (
                     <span className="inline-block w-12 h-5 bg-surface-alt rounded animate-pulse" />
-                  ) : stat.value}
+                  ) : (
+                    <AnimatedStat value={stat.raw} decimals={stat.decimals} suffix={stat.suffix} />
+                  )}
                 </p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -283,7 +335,12 @@ export default function DashboardPage() {
             ) : (
               <div className="space-y-0">
                 {stats?.recent_sessions.map((session, idx) => (
-                  <div key={session.session_id}>
+                  <motion.div
+                    key={session.session_id}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ ...spring, delay: idx * 0.06 }}
+                  >
                     <Link
                       href={`/results/${session.session_id}`}
                       className="py-4 group block"
@@ -314,7 +371,7 @@ export default function DashboardPage() {
                     {idx < (stats?.recent_sessions.length ?? 0) - 1 && (
                       <div className="hairline" />
                     )}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}

@@ -3,8 +3,6 @@ Database Connection
 ====================
 Async SQLAlchemy engine and session management for PostgreSQL.
 
-Phase: 1 — Week 1
-Status: 🔲 Not Started
 """
 
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker

@@ -1,34 +1,71 @@
 @import "tailwindcss";
 
-/* ─── Light Retro-Academic Palette ─── */
+/* ================================================================
+   MOCKAI DESIGN SYSTEM — PRECISION NOSTALGIA
+   Japanese industrial minimalism × NES soul × Frutiger Aero warmth
+   ================================================================ */
+
+/* ─── Core Palette ─── */
 :root {
-  --surface: #FAFAF8;
-  --surface-alt: #F0EDE8;
-  --surface-raised: #FFFFFF;
-  --ink: #1A1A1A;
-  --ink-muted: #6B6B6B;
-  --ink-faint: #9E9E9E;
+  /* Surfaces */
+  --surface: #F7F4EF;
+  --surface-alt: #EDE9E0;
+  --surface-raised: #FDFCFA;
+  --surface-deep: #E8E3D8;
+
+  /* Ink */
+  --ink: #1C1917;
+  --ink-muted: #6B6560;
+  --ink-faint: #A09890;
+
+  /* Primary accent — warm amber brown */
   --accent: #8B7355;
   --accent-hover: #6F5B42;
-  --accent-light: rgba(139, 115, 85, 0.08);
-  --border: #E0DCD6;
-  --border-strong: #C4BEB5;
+  --accent-light: rgba(139, 115, 85, 0.09);
+  --accent-glow: rgba(139, 115, 85, 0.20);
+
+  /* Secondary accent — electric teal (NES surprise) */
+  --teal: #0D9488;
+  --teal-hover: #0F766E;
+  --teal-light: rgba(13, 148, 136, 0.09);
+  --teal-glow: rgba(13, 148, 136, 0.20);
+
+  /* Semantic */
   --success: #3D7A4A;
+  --success-light: rgba(61, 122, 74, 0.08);
   --warning: #B8860B;
+  --warning-light: rgba(184, 134, 11, 0.08);
   --danger: #A63D3D;
-  --code-bg: #1E1E1E;
+  --danger-light: rgba(166, 61, 61, 0.08);
+
+  /* Borders */
+  --border: #DDD8CF;
+  --border-strong: #C4BDB0;
+  --border-accent: rgba(139, 115, 85, 0.35);
+
+  /* Code */
+  --code-bg: #1A1917;
+
+  /* Glass */
+  --glass-bg: rgba(253, 252, 250, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.88);
 }
 
+/* ─── Tailwind Token Bridge ─── */
 @theme inline {
   --color-surface: var(--surface);
   --color-surface-alt: var(--surface-alt);
   --color-surface-raised: var(--surface-raised);
+  --color-surface-deep: var(--surface-deep);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-ink-faint: var(--ink-faint);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-light: var(--accent-light);
+  --color-teal: var(--teal);
+  --color-teal-hover: var(--teal-hover);
+  --color-teal-light: var(--teal-light);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-success: var(--success);
@@ -38,21 +75,529 @@
   --font-headline: var(--font-headline);
   --font-body: var(--font-body);
   --font-typewriter: var(--font-typewriter);
+  --font-mono: var(--font-mono);
 }
 
-/* ─── Base ─── */
+/* ================================================================
+   BASE
+   ================================================================ */
+
+.mockai-bg {
+  background: var(--surface);
+}
+
 body {
   background: var(--surface);
   color: var(--ink);
   font-family: var(--font-body), Georgia, serif;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-headline), system-ui, sans-serif;
 }
 
-/* ─── Utilities ─── */
+/* Monospace for numbers, scores, labels */
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* ================================================================
+   PIXEL GRID TEXTURE — The soul of the design
+   Very subtle dot-grid overlay, NES graph paper spirit
+   ================================================================ */
+
+.pixel-grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(139, 115, 85, 0.07) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+}
+
+/* Local grid texture for specific sections */
+.pixel-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(139, 115, 85, 0.10) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+.pixel-grid-teal {
+  background-image: radial-gradient(
+    circle,
+    rgba(13, 148, 136, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+/* ================================================================
+   CORNER CUT — Cartridge/chip aesthetic
+   ================================================================ */
+
+.corner-cut {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.corner-cut-lg {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+
+.corner-cut-both {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+
+/* ================================================================
+   GLASS SYSTEM — Warm Frutiger Aero / Liquid Glass
+   ================================================================ */
+
+/* Auth pages warm glass card */
+.glass-warm {
+  background: var(--glass-bg);
+  backdrop-filter: blur(28px) saturate(1.8) brightness(1.04);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8) brightness(1.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow:
+    0 2px 1px rgba(255, 255, 255, 0.95) inset,
+    0 -1px 1px rgba(196, 166, 120, 0.12) inset,
+    0 12px 40px rgba(139, 115, 85, 0.10),
+    0 2px 8px rgba(139, 115, 85, 0.06);
+}
+
+/* Section cards — light glass tint */
+.section-card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  position: relative;
+}
+
+.section-card-alt {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+/* Elevated card with glass effect */
+.card-glass {
+  background: rgba(253, 252, 250, 0.85);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  border-radius: 3px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 4px 16px rgba(139, 115, 85, 0.07),
+    0 1px 4px rgba(139, 115, 85, 0.04);
+}
+
+/* ================================================================
+   AERO AMBIENT BACKGROUNDS
+   ================================================================ */
+
+.aero-bg {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    #FAF7F2 0%,
+    #F2EBE0 45%,
+    #EAE1D4 100%
+  );
+}
+
+.aero-spot {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
+}
+
+.aero-spot-amber {
+  background: radial-gradient(
+    circle,
+    rgba(210, 175, 120, 0.20) 0%,
+    transparent 70%
+  );
+}
+
+.aero-spot-teal {
+  background: radial-gradient(
+    circle,
+    rgba(13, 148, 136, 0.10) 0%,
+    transparent 70%
+  );
+}
+
+/* ================================================================
+   AERO INPUTS
+   ================================================================ */
+
+.aero-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(196, 189, 176, 0.75);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.875rem;
+  transition: all 150ms ease;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(139, 115, 85, 0.05);
+}
+
+.aero-input::placeholder {
+  color: var(--ink-faint);
+}
+
+.aero-input:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 0 1px 3px rgba(139, 115, 85, 0.05),
+    0 0 0 3px rgba(139, 115, 85, 0.12);
+}
+
+/* ================================================================
+   BUTTON SYSTEM
+   ================================================================ */
+
+/* Primary — warm brown gloss (Frutiger Aero) */
+.aero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  background: linear-gradient(
+    180deg,
+    #A8916E 0%,
+    #8B7355 40%,
+    #6F5B42 100%
+  );
+  color: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(80, 65, 46, 0.85);
+  border-radius: 8px;
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.15) inset,
+    0 4px 14px rgba(111, 91, 66, 0.28),
+    0 1px 3px rgba(111, 91, 66, 0.18);
+  transition: all 130ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+
+.aero-btn:hover:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    #B89A76 0%,
+    #96785A 40%,
+    #786249 100%
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.15) inset,
+    0 6px 18px rgba(111, 91, 66, 0.32),
+    0 2px 6px rgba(111, 91, 66, 0.20);
+  transform: translateY(-2px);
+}
+
+.aero-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 2px 6px rgba(111, 91, 66, 0.18);
+}
+
+.aero-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary — ghost with border */
+.ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 130ms ease;
+  text-decoration: none;
+}
+
+.ghost-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* Teal variant */
+.teal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  background: linear-gradient(
+    180deg,
+    #2BB5AA 0%,
+    #0D9488 40%,
+    #0A7A70 100%
+  );
+  color: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(8, 100, 92, 0.85);
+  border-radius: 4px;
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.20) inset,
+    0 4px 14px rgba(13, 148, 136, 0.28);
+  transition: all 130ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+
+.teal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.20) inset,
+    0 6px 18px rgba(13, 148, 136, 0.35);
+}
+
+/* Ink button (existing, improved) */
+.ink-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  background: var(--ink);
+  color: var(--surface-raised);
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+  text-decoration: none;
+}
+
+.ink-btn:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* ================================================================
+   ANIMATIONS
+   ================================================================ */
+
+/* Spring pop-in */
+@keyframes spring-in {
+  0% { opacity: 0; transform: scale(0.92) translateY(8px); }
+  60% { transform: scale(1.02) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Slide up fade */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade in */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Arcade counter pulse */
+@keyframes count-up {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); color: var(--accent); }
+  100% { transform: scale(1); }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* NES blink */
+@keyframes nes-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Scan shimmer — very subtle */
+@keyframes scan-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Typewriter cursor */
+@keyframes blink-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Animation utilities */
+.animate-spring-in {
+  animation: spring-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.35s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ================================================================
+   INTERACTIVE ELEMENTS
+   ================================================================ */
+
+/* Snappy micro-transition */
+.snap-transition {
+  transition: all 110ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Spring transition */
+.spring-transition {
+  transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Card hover lift */
+.card-lift {
+  transition: all 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 24px rgba(139, 115, 85, 0.12),
+    0 2px 8px rgba(139, 115, 85, 0.08);
+}
+
+/* Glow on hover */
+.hover-glow:hover {
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.hover-glow-teal:hover {
+  box-shadow: 0 0 0 3px var(--teal-glow);
+}
+
+/* Scan shimmer on hover (very subtle NES reference) */
+.scan-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.scan-hover:hover::after {
+  opacity: 1;
+  animation: scan-shimmer 0.6s ease;
+}
+
+/* ================================================================
+   TYPEWRITER
+   ================================================================ */
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.85em;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+.typewriter-cursor--hidden {
+  opacity: 0;
+}
+
+/* NES-style blinking cursor variant */
+.nes-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: nes-blink 1s step-end infinite;
+}
+
+/* ================================================================
+   LAYOUT COMPONENTS
+   ================================================================ */
+
 .hairline {
   border-bottom: 1px solid var(--border);
 }
@@ -61,60 +606,82 @@ h1, h2, h3, h4, h5, h6 {
   border-top: 1px solid var(--border);
 }
 
-.section-card {
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-}
-
-.section-card-alt {
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-}
-
-/* ─── Typewriter Animation ─── */
-@keyframes blink-caret {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.typewriter-cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1em;
+/* Accent top-line (domain card style) */
+.accent-top-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
   background: var(--accent);
-  margin-left: 2px;
-  vertical-align: text-bottom;
-  animation: blink-caret 0.8s step-end infinite;
+  border-radius: 2px 2px 0 0;
 }
 
-.typewriter-cursor--hidden {
-  opacity: 0;
+.teal-top-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--teal);
+  border-radius: 2px 2px 0 0;
 }
 
-/* ─── Custom Scrollbar (light) ─── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--ink-faint);
+/* ================================================================
+   STATUS INDICATORS
+   ================================================================ */
+
+/* Live dot */
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 0 rgba(61, 122, 74, 0.4);
+  animation: glow-pulse 2s ease infinite;
 }
 
-/* ─── Snappy Transitions ─── */
-.snap-transition {
-  transition: all 100ms ease-in-out;
+/* Phase badge */
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  background: var(--surface-raised);
+  letter-spacing: 0.02em;
 }
 
-/* ─── Practice Tabs ─── */
+/* ================================================================
+   ARCADE SCORE STYLE
+   ================================================================ */
+
+.arcade-score {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.arcade-label {
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ================================================================
+   NAV TABS
+   ================================================================ */
+
 .practice-tab {
   position: relative;
   padding: 0.625rem 1.25rem;
@@ -122,15 +689,18 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   font-size: 0.8125rem;
   color: var(--ink-muted);
-  transition: color 100ms ease-in-out;
+  transition: color 100ms ease;
   white-space: nowrap;
 }
+
 .practice-tab:hover {
   color: var(--ink);
 }
+
 .practice-tab-active {
   color: var(--ink);
 }
+
 .practice-tab-active::after {
   content: "";
   position: absolute;
@@ -139,9 +709,50 @@ h1, h2, h3, h4, h5, h6 {
   right: 0.5rem;
   height: 2px;
   background: var(--accent);
+  border-radius: 1px;
 }
 
-/* ─── Subject Pills ─── */
+/* ================================================================
+   DOMAIN / SUBJECT CARDS
+   ================================================================ */
+
+.domain-card {
+  position: relative;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  text-align: left;
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 3px;
+}
+
+.domain-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 115, 85, 0.08);
+}
+
+.domain-card-active {
+  border-color: var(--accent);
+  background: rgba(139, 115, 85, 0.05);
+}
+
+.domain-card-active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 3px 3px 0 0;
+}
+
+/* ================================================================
+   SUBJECT PILLS
+   ================================================================ */
+
 .subject-pill {
   display: inline-flex;
   align-items: center;
@@ -153,46 +764,44 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--ink-muted);
-  transition: all 100ms ease-in-out;
-  border-radius: 1px;
+  transition: all 110ms ease;
+  border-radius: 2px;
   letter-spacing: 0.01em;
 }
+
 .subject-pill-active {
   border-color: var(--accent);
-  background: rgba(139, 115, 85, 0.08);
+  background: var(--accent-light);
   color: var(--ink);
 }
 
-/* ─── Domain Cards ─── */
-.domain-card {
-  position: relative;
-  padding: 1.25rem;
-  border: 1px solid var(--border);
-  background: var(--surface-raised);
-  text-align: left;
-  cursor: pointer;
-  transition: all 100ms ease-in-out;
-  border-radius: 2px;
-}
-.domain-card:hover {
-  border-color: var(--border-strong);
-}
-.domain-card-active {
-  border-color: var(--accent);
-  background: rgba(139, 115, 85, 0.06);
-}
-.domain-card-active::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
 }
 
-/* ─── Selection ─── */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
+}
+
+/* ================================================================
+   SELECTION
+   ================================================================ */
+
 ::selection {
-  background: rgba(139, 115, 85, 0.2);
+  background: rgba(139, 115, 85, 0.22);
   color: var(--ink);
 }

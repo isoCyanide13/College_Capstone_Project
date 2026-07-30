@@ -3,10 +3,10 @@ Sessions Router
 ================
 Handles the complete question practice session lifecycle.
 
-POST /api/sessions/start      → Create session, generate questions
-GET  /api/sessions/{id}       → Get session + questions
-POST /api/answers/submit      → Save one answer
-PUT  /api/sessions/{id}/end   → End session, trigger AI evaluation
+POST /api/sessions/start       → Create session, generate questions
+GET  /api/sessions/{id}        → Get session + questions
+POST /api/answers/submit       → Save one answer
+PUT  /api/sessions/{id}/end    → End session, trigger AI evaluation
 GET  /api/sessions/{id}/report → Get full scored results
 """
 
@@ -76,7 +76,7 @@ async def start_session(
     db.add(session)
     await db.flush()  # get session.id without committing
 
-    # Step 2 — Generate questions via Gemini
+    # Step 2 — Generate questions via Gemini / Groq
     try:
         subtopics_list = [s.dict() for s in config.subtopics]
         raw_questions = await generate_questions(

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Public_Sans, Merriweather, Special_Elite } from "next/font/google";
+import { Public_Sans, Merriweather, Special_Elite, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
@@ -25,10 +25,17 @@ const specialElite = Special_Elite({
   display: "swap",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Mock Interview Simulator Using Artificial Intelligence",
+  title: "MockAI — AI-Powered Interview Preparation",
   description:
-    "A structured AI-powered mock interview platform for technical practice, coding evaluation, and adaptive skill tracking.",
+    "Adaptive AI interview simulator with dynamic question generation, real-time evaluation, and skill tracking.",
 };
 
 export default function RootLayout({
@@ -39,9 +46,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${publicSans.variable} ${merriweather.variable} ${specialElite.variable} h-full antialiased`}
+      className={`${publicSans.variable} ${merriweather.variable} ${specialElite.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col pt-16 bg-surface text-ink">
+      <body className="mockai-bg min-h-full flex flex-col pt-16 text-ink">
+        <div className="pixel-grid-overlay" aria-hidden="true" />
         <AuthProvider>
           <Navbar />
           {children}
