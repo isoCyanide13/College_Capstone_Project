@@ -297,21 +297,35 @@ async def end_session(
 
     for question in questions:
         answer = answer_map.get(str(question.id))
-        user_answer = answer.response_text if answer else ""
+        user_answer = (answer.response_text or "") if answer else ""
         time_taken = answer.time_taken_seconds if answer else 0
         total_time += time_taken or 0
-
-        # Evaluate with Gemini
-        eval_result = await evaluate_answer(
-            question=question.content,
-            question_type=question.type,
-            correct_answer=question.correct_answer or "",
-            user_answer=user_answer or "",
-            topic=session.subject_name or "",
-        )
-
-        score = eval_result["score"]
+        # --------------------------------------------------
+        # Skip evaluation for unanswered / blank questions
+        # --------------------------------------------------
+        if answer is None or not user_answer.strip():
+            user_answer = "Question not attempted"
+            score = 0
+            eval_result = {
+                "score": 0,
+                "is_correct": False,
+                "feedback": "Question was not attempted.",
+                "strengths": [],
+                "weaknesses": [],
+                "correct_answer": question.correct_answer or "",
+            }
+        else:
+            # Evaluate with Gemini
+            eval_result = await evaluate_answer(
+                question=question.content,
+                question_type=question.type,
+                correct_answer=question.correct_answer or "",
+                user_answer=user_answer or "",
+                topic=session.subject_name or "",
+            )
+            score = eval_result["score"]
         total_score += score
+
         if eval_result["is_correct"]:
             correct_count += 1
 
@@ -451,7 +465,11 @@ async def get_report(
         evaluations.append(EvaluationResult(
             question=q.content,
             question_type=q.type,
-            user_answer=answer.response_text if answer else "No answer",
+            user_answer=(
+                (answer.response_text or "Question not attempted")
+                if answer
+                else "Question not attempted"
+            ),
             correct_answer=eval_record.correct_answer if eval_record else q.correct_answer or "",
             score=float(eval_record.score) if eval_record else 0,
             is_correct=eval_record.is_correct if eval_record else False,
