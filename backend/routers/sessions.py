@@ -286,28 +286,6 @@ async def end_session(
     answers = result.scalars().all()
     answer_map = {str(a.question_id): a for a in answers}
 
-    # temp print statements================
-    print("\n" + "=" * 80)
-    print("SESSION DEBUG")
-    print("=" * 80)
-    print(f"Questions fetched : {len(questions)}")
-    print(f"Answers fetched   : {len(answers)}")
-    print("\nQuestions:")
-    for q in questions:
-        print(
-            f"Q{q.question_number} | "
-            f"id={q.id} | "
-            f"subtopic={q.subtopic_id}"
-        )
-    print("\nAnswers:")
-    for a in answers:
-        print(
-            f"question_id={a.question_id} | "
-            f"answer={repr(a.response_text)}"
-        )
-    print("=" * 80 + "\n")
-    # temp print statements end========================
-
     # Evaluate each question
     evaluations = []
     total_score = 0
@@ -350,23 +328,6 @@ async def end_session(
 
         if eval_result["is_correct"]:
             correct_count += 1
-        # temp print statements================
-        print(f"""
-        -----------------------------
-        Question #{question.question_number}
-
-        Question ID     : {question.id}
-        Answer Found    : {answer is not None}
-        User Answer     : {repr(user_answer)}
-        Score           : {score}
-        Is Correct      : {eval_result['is_correct']}
-
-        Running Score   : {total_score}
-        Running Correct : {correct_count}
-        -----------------------------
-        """
-        )
-        # temp print statements================
 
         # Track subtopic scores
         subtopic_id = question.subtopic_id or session.subject_id or ""
@@ -418,17 +379,6 @@ async def end_session(
     num_questions = len(questions)
     avg_score = total_score / num_questions if num_questions > 0 else 0
     accuracy = (correct_count / num_questions * 100) if num_questions > 0 else 0
-    # temp print statements================
-    print("\n" + "=" * 80)
-    print("FINAL CALCULATION")
-    print("=" * 80)
-    print(f"Total Score (sum) : {total_score}")
-    print(f"Correct Count     : {correct_count}")
-    print(f"Questions         : {num_questions}")
-    print(f"Average Score     : {avg_score}")
-    print(f"Accuracy          : {accuracy}")
-    print("=" * 80 + "\n")
-    # temp print statements end================
 
     # Update skill vector (subject level)
     await update_skill_vector(
@@ -453,17 +403,8 @@ async def end_session(
         "correct": correct_count,
         "total_time": total_time,
     }
-
+    
     await db.commit()
-    # temp print statements ==================================
-    await db.refresh(session)
-
-    print("\nAFTER COMMIT")
-    print("session.total_score =", session.total_score)
-    print("session.accuracy    =", session.accuracy)
-    print("session.summary     =", session.session_summary)
-    # temp print statements ==================================
-
     return SessionReport(
         session_id=session.id,
         subject_name=session.subject_name or "",
