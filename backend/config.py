@@ -5,6 +5,7 @@ Application settings loaded from environment variables using pydantic-settings.
 """
 
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 from typing import Optional
 
 
@@ -55,11 +56,12 @@ class Settings(BaseSettings):
     AWS_S3_BUCKET: str = "interview-recordings"
     AWS_REGION: str = "ap-south-1"
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = True
-
+    model_config = ConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,
+        extra="ignore",
+    )
 
 # Singleton instance
 settings = Settings()

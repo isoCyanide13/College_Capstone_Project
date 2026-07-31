@@ -79,12 +79,14 @@ export default function QuestionPracticePage() {
 const [activeTab, setActiveTab] = useState("topic");
 const [starting, setStarting] = useState(false);
 const router = useRouter();
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const handleTopicStart = async (config: any) => {
   setStarting(true);
   const token = getToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sessions/start`, {
+    const res = await fetch(`${API_BASE_URL}/api/sessions/start`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
